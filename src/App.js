@@ -154,6 +154,25 @@ function App() {
       }
     })
   }
+  async function axiosAll(){
+    var axiosReqList= [];
+    urls.map(async (url) => {
+      for (let index = 0; index < url.url.count; index++) {
+        axiosReqList.push(axios.get(url.url.url));
+      }
+    })
+    console.log(axiosReqList);
+    axios.all(axiosReqList).then(axios.spread((...responses) => {
+      responses.forEach(response => {
+        console.log(response);
+        
+      });
+      // use/access the results 
+    })).catch(errors => {
+      console.log(errors);
+      
+    })
+  }
   async function sendAsyncRequest(url) {
     axios.get(url)
       .then(res => {
@@ -187,6 +206,13 @@ function App() {
           className={classes.buttons}
           variant="contained"
           color="primary">Send Request</Button>
+          <Button
+          size='small'
+          spacing={5}
+          onClick={() => axiosAll()}
+          className={classes.buttons}
+          variant="contained"
+          color="inherit">axios all</Button>
         {urls.map((url, index) => (
           <Url
             key={index}
