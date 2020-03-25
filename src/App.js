@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, Chip, Grid, TextField, Typography } from '@material-ui/core';
@@ -45,36 +44,36 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Todo({ todo, index, completeTodo, removeTodo }) {
+function Url({ url, index, completeUrl, removeUrl }) {
   const classes = useStyles();
 
   return (
     <div key={index}
-      style={{ textDecoration: todo.isCompleted ? "line-through" : "" }}>
+      style={{ textDecoration: url.isCompleted ? "line-through" : "" }}>
       <Chip variant="outlined"
         key={index}
         spacing={5}
         color="primary"
         clickable
-        label={'Url : ' + todo.url.url} />
+        label={'Url : ' + url.url.url} />
       <Chip variant="outlined"
         key={index}
         spacing={5}
         color="primary"
         clickable
-        label={'Count : ' + todo.url.count} />
+        label={'Count : ' + url.url.count} />
       <Button
         key={index}
         className={classes.button}
         size='small'
         variant="contained"
         color="secondary"
-        onClick={() => removeTodo(index)}>X</Button>
+        onClick={() => removeUrl(index)}>X</Button>
     </div>
   );
 }
 
-function TodoForm({ addTodo }) {
+function UrlForm({ addUrl }) {
   const [value, setValue] = useState("");
   const [count, setCount] = useState("");
 
@@ -85,7 +84,7 @@ function TodoForm({ addTodo }) {
       'url': value,
       'count': count
     }
-    addTodo(url);
+    addUrl(url);
   };
   const classes = useStyles();
 
@@ -124,24 +123,24 @@ function TodoForm({ addTodo }) {
 }
 
 function App() {
-  const [todos, setTodos] = useState([
+  const [urls, setUrls] = useState([
 
   ]);
   const [result, setResult] = useState("");
 
-  const addTodo = url => {
-    const newTodos = [...todos, { url }];
-    setTodos(newTodos);
+  const addUrl = url => {
+    const newurls = [...urls, { url }];
+    setUrls(newurls);
   };
 
-  const removeTodo = index => {
-    const newTodos = [...todos];
-    newTodos.splice(index, 1);
-    setTodos(newTodos);
+  const removeUrl = index => {
+    const newurls = [...urls];
+    newurls.splice(index, 1);
+    setUrls(newurls);
   };
 
   async function sendUrls() {
-    axios.post(`https://runner-server.herokuapp.com/urls`, { todos })
+    axios.post(`https://runner-server.herokuapp.com/urls`, { urls })
       .then(res => {
         console.log(res);
         console.log(res.data);
@@ -149,7 +148,7 @@ function App() {
       );
   };
   async function sendRequest() {
-    todos.map(async (url) => {
+    urls.map(async (url) => {
       for (let index = 0; index < url.url.count; index++) {
         await sendAsyncRequest(url.url.url);
       }
@@ -171,8 +170,8 @@ function App() {
   return (
     <Grid className={classes.layout}>
       <h1>Entry URL/URLs</h1>
-      <div className="todo-list">
-        <TodoForm addTodo={addTodo} />
+      <div className="url-list">
+        <UrlForm addUrl={addUrl} />
         <Button
           size='small'
           spacing={5}
@@ -188,11 +187,11 @@ function App() {
           className={classes.buttons}
           variant="contained"
           color="primary">Send Request</Button>
-        {todos.map((todo, index) => (
-          <Todo
+        {urls.map((url, index) => (
+          <Url
             key={index}
-            todo={todo}
-            removeTodo={removeTodo}
+            url={url}
+            removeUrl={removeUrl}
           />
         ))}
       </div>
