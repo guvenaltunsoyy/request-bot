@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, Chip, Grid, TextField, Typography } from '@material-ui/core';
 
@@ -133,7 +133,10 @@ function App() {
     const newurls = [...urls, { url }];
     setUrls(newurls);
   };
-
+  useEffect(()=>{
+      document.getElementById("success").value= `Succes Request ${succesRequest}`;
+      document.getElementById("fail").value= `Fail Request ${failRequest}`;
+  });
   const removeUrl = index => {
     const newurls = [...urls];
     newurls.splice(index, 1);
@@ -182,11 +185,11 @@ function App() {
       .then(res => {
         console.log(res.status);
         //console.log(res.data);
-        setSuccesRequest(succesRequest++);
+        setSuccesRequest(succesRequest+1);
       }).catch(err => { setResult(JSON.stringify(err));
         //console.log(JSON.parse(JSON.stringify(err))); 
         setResult(JSON.stringify(err));
-        setFailRequest(failRequest++);
+        setFailRequest(failRequest+1);
 
       });
   }
@@ -228,8 +231,8 @@ function App() {
           />
         ))}
       </div>
-      <p>Succes Request Count : {succesRequest}</p>
-      <p>Fail Request Count: {failRequest}</p>
+      <p id="succes"></p>
+      <p id="fail"></p>
       LAST FAIL RESPONSE:
       <Typography variant="h6" component="h2">
         {result}
