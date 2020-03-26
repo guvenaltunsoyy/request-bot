@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, Chip, Grid, TextField, Typography } from '@material-ui/core';
-
+import Response from './Response.js';
 import axios from 'axios';
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -159,13 +159,8 @@ function App() {
         axiosReqList.push(axios.get(url.url.url));
       }
     })
-    console.log(axiosReqList);
     axios.all(axiosReqList).then(axios.spread((...responses) => {
       console.log(`Succes req : ${responses.length}`);
-      responses.forEach(response => {
-        console.log(response);
-        
-      });
       // use/access the results 
     })).catch(errors => {
       console.log(errors);
@@ -185,6 +180,7 @@ async function sendAutomaticRequest(){
     axios.get(url)
       .then(res => {
         console.log(res.status);
+        <Response prop={res.data} />
         //console.log(res.data);
       }).catch(err => { setResult(JSON.stringify(err));
         //console.log(JSON.parse(JSON.stringify(err))); 
