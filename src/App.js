@@ -134,8 +134,8 @@ function App() {
     setUrls(newurls);
   };
   useEffect(()=>{
-      document.getElementById("success").value= `Succes Request ${succesRequest}`;
-      document.getElementById("fail").value= `Fail Request ${failRequest}`;
+      document.getElementById("success").innerHTML= `<p>Succes Request ${succesRequest}<p/>`;
+      document.getElementById("fail").innerHTML= `<p>Fail Request ${failRequest}</p>`;
   });
   const removeUrl = index => {
     const newurls = [...urls];
@@ -194,7 +194,6 @@ function App() {
       });
   }
   const classes = useStyles();
-
 
   return (
     <Grid className={classes.layout}>
