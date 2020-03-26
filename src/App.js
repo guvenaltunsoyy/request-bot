@@ -135,8 +135,8 @@ function App() {
     setUrls(newurls);
   };
   useEffect(()=>{
-      document.getElementById("succes").innerHTML= `<p>`;
-      document.getElementById("fail").innerHTML= `<p>`;
+      console.log(succesRequest, failRequest);
+      
   });
   const removeUrl = index => {
     const newurls = [...urls];
