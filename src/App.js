@@ -127,7 +127,8 @@ function App() {
 
   ]);
   const [result, setResult] = useState("");
-
+  const [succesRequest, setSuccesRequest] = useState(0);
+  const [failRequest, setFailRequest] = useState(0);
   const addUrl = url => {
     const newurls = [...urls, { url }];
     setUrls(newurls);
@@ -178,10 +179,13 @@ function App() {
     axios.get(url)
       .then(res => {
         console.log(res.status);
-        setResult(JSON.stringify(res.data));
         //console.log(res.data);
+        setSuccesRequest(succesRequest++);
       }).catch(err => { setResult(JSON.stringify(err));
         //console.log(JSON.parse(JSON.stringify(err))); 
+        setResult(JSON.stringify(err));
+        setFailRequest(failRequest++);
+
       });
   }
   const classes = useStyles();
@@ -222,7 +226,9 @@ function App() {
           />
         ))}
       </div>
-      RESULT:
+      <p>Succes Request Count : {succesRequest}</p>
+      <p>Fail Request Count: {failRequest}</p>
+      LAST FAIL RESPONSE:
       <Typography variant="h6" component="h2">
         {result}
       </Typography>
