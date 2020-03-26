@@ -158,8 +158,6 @@ function App() {
       );
   };
   async function sendRequest() {
-    succesRequest =0 ;
-    failRequest = 0;
     urls.map(async (url) => {
       for (let index = 0; index < url.url.count; index++) {
         sendAsyncRequest(url.url.url);
