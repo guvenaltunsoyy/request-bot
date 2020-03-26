@@ -150,7 +150,7 @@ function App() {
   async function sendRequest() {
     urls.map(async (url) => {
       for (let index = 0; index < url.url.count; index++) {
-        await sendAsyncRequest(url.url.url);
+        sendAsyncRequest(url.url.url);
       }
     })
   }
@@ -173,6 +173,7 @@ function App() {
       
     })
   }
+
   async function sendAsyncRequest(url) {
     axios.get(url)
       .then(res => {
