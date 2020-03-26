@@ -125,24 +125,12 @@ function UrlForm({ addUrl }) {
 function App() {
   const [urls, setUrls] = useState([]);
   const [result, setResult] = useState("");
-  const [succesRequest, setSuccesRequest] = useState([]);
-  const [failRequest, setFailRequest] = useState([]);
-  const addSuccesReq = req => {
-    const sr = [...succesRequest, { req }];
-    setSuccesRequest(sr);
-  };
-  const addFailReq = req => {
-    const fr = [...failRequest, { req }];
-    setFailRequest(fr);
-  };
+
   const addUrl = url => {
     const newurls = [...urls, { url }];
     setUrls(newurls);
   };
-  useEffect(()=>{
-      console.log(succesRequest, failRequest);
-      
-  });
+
   const removeUrl = index => {
     const newurls = [...urls];
     newurls.splice(index, 1);
@@ -184,17 +172,23 @@ function App() {
       
     })
   }
-
+async function sendAutomaticRequest(){
+  try {
+    setInterval(async () => {
+      await sendRequest();
+    }, 30000);
+  } catch(e) {
+    console.log(e);
+  
+}
   async function sendAsyncRequest(url) {
     axios.get(url)
       .then(res => {
         console.log(res.status);
         //console.log(res.data);
-        addSuccesReq(res.data)
       }).catch(err => { setResult(JSON.stringify(err));
         //console.log(JSON.parse(JSON.stringify(err))); 
         setResult(JSON.stringify(err));
-        addFailReq(err)
 
       });
   }
@@ -208,11 +202,10 @@ function App() {
         <Button
           size='small'
           spacing={5}
-          disabled
-          onClick={() => sendUrls()}
+          onClick={() => sendAutomaticRequest()}
           className={classes.buttons}
           variant="contained"
-          color="primary">Send Urls</Button>
+          color="primary">Send Automatic Request 30 Secons</Button>
         <Button
           size='small'
           spacing={5}
@@ -235,8 +228,6 @@ function App() {
           />
         ))}
       </div>
-      <p id="succes">Succes Request {succesRequest.length}</p>
-      <p id="fail">Fail Request {failRequest.length}</p>
       LAST FAIL RESPONSE:
       <Typography variant="h6" component="h2">
         {result}
