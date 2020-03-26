@@ -127,15 +127,16 @@ function App() {
 
   ]);
   const [result, setResult] = useState("");
-  const [succesRequest, setSuccesRequest] = useState(0);
-  const [failRequest, setFailRequest] = useState(0);
+  var succesRequest =0;
+  var failRequest = 0;
+  
   const addUrl = url => {
     const newurls = [...urls, { url }];
     setUrls(newurls);
   };
   useEffect(()=>{
-      document.getElementById("succes").innerHTML= `<p>Succes Request ${succesRequest}<p/>`;
-      document.getElementById("fail").innerHTML= `<p>Fail Request ${failRequest}</p>`;
+      document.getElementById("succes").innerHTML= `<p>`;
+      document.getElementById("fail").innerHTML= `<p>`;
   });
   const removeUrl = index => {
     const newurls = [...urls];
@@ -152,8 +153,8 @@ function App() {
       );
   };
   async function sendRequest() {
-    setSuccesRequest(0);
-    setFailRequest(0);
+    succesRequest =0 ;
+    failRequest = 0;
     urls.map(async (url) => {
       for (let index = 0; index < url.url.count; index++) {
         sendAsyncRequest(url.url.url);
@@ -185,11 +186,11 @@ function App() {
       .then(res => {
         console.log(res.status);
         //console.log(res.data);
-        setSuccesRequest(succesRequest+1);
+        succesRequest = (succesRequest+1);
       }).catch(err => { setResult(JSON.stringify(err));
         //console.log(JSON.parse(JSON.stringify(err))); 
         setResult(JSON.stringify(err));
-        setFailRequest(failRequest+1);
+        failRequest = (failRequest+1);
 
       });
   }
@@ -230,8 +231,8 @@ function App() {
           />
         ))}
       </div>
-      <p id="succes"></p>
-      <p id="fail"></p>
+      <p id="succes">Succes Request ${succesRequest}</p>
+      <p id="fail">Fail Request ${failRequest}</p>
       LAST FAIL RESPONSE:
       <Typography variant="h6" component="h2">
         {result}
