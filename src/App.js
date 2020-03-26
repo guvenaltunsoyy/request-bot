@@ -179,7 +179,7 @@ async function sendAutomaticRequest(){
     }, 30000);
   } catch(e) {
     console.log(e);
-  
+  }
 }
   async function sendAsyncRequest(url) {
     axios.get(url)
