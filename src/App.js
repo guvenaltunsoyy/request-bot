@@ -123,24 +123,17 @@ function UrlForm({ addUrl }) {
 }
 
 function App() {
-  const [urls, setUrls] = useState([
-
-  ]);
+  const [urls, setUrls] = useState([]);
   const [result, setResult] = useState("");
-  var succesRequest =0;
-  const [succesRequest, setSuccesRequest] = useState([
-
-  ]);
-  const [failRequest, setFailRequest] = useState([
-
-  ]);
+  const [succesRequest, setSuccesRequest] = useState([]);
+  const [failRequest, setFailRequest] = useState([s]);
   const addSuccesReq = req => {
     const sr = [...succesRequest, { req }];
-    addSuccesReq(sr);
+    setSuccesRequest(sr);
   };
   const addFailReq = req => {
     const fr = [...failRequest, { req }];
-    addFailReq(fr);
+    setFailRequest(fr);
   };
   const addUrl = url => {
     const newurls = [...urls, { url }];
