@@ -7,9 +7,9 @@ export default function Response(prop){
     console.log(prop);
     
     return (
-        <Grid className={classes.layout}>
+        <div>
           RESPONSE:
 
-        </Grid>
+        </div>
       );
 }
