@@ -126,7 +126,7 @@ function App() {
   const [urls, setUrls] = useState([]);
   const [result, setResult] = useState("");
   const [succesRequest, setSuccesRequest] = useState([]);
-  const [failRequest, setFailRequest] = useState([s]);
+  const [failRequest, setFailRequest] = useState([]);
   const addSuccesReq = req => {
     const sr = [...succesRequest, { req }];
     setSuccesRequest(sr);
@@ -237,8 +237,8 @@ function App() {
           />
         ))}
       </div>
-      <p id="succes">Succes Request {succesRequest}</p>
-      <p id="fail">Fail Request {failRequest}</p>
+      <p id="succes">Succes Request {succesRequest.length}</p>
+      <p id="fail">Fail Request {failRequest.length}</p>
       LAST FAIL RESPONSE:
       <Typography variant="h6" component="h2">
         {result}
