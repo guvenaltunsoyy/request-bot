@@ -128,8 +128,20 @@ function App() {
   ]);
   const [result, setResult] = useState("");
   var succesRequest =0;
-  var failRequest = 0;
-  
+  const [succesRequest, setSuccesRequest] = useState([
+
+  ]);
+  const [failRequest, setFailRequest] = useState([
+
+  ]);
+  const addSuccesReq = req => {
+    const sr = [...succesRequest, { req }];
+    addSuccesReq(sr);
+  };
+  const addFailReq = req => {
+    const fr = [...failRequest, { req }];
+    addFailReq(fr);
+  };
   const addUrl = url => {
     const newurls = [...urls, { url }];
     setUrls(newurls);
@@ -170,6 +182,7 @@ function App() {
     })
     console.log(axiosReqList);
     axios.all(axiosReqList).then(axios.spread((...responses) => {
+      console.log(`Succes req : ${responses.length}`);
       responses.forEach(response => {
         console.log(response);
         
@@ -186,11 +199,11 @@ function App() {
       .then(res => {
         console.log(res.status);
         //console.log(res.data);
-        succesRequest = (succesRequest+1);
+        addSuccesReq(res.data)
       }).catch(err => { setResult(JSON.stringify(err));
         //console.log(JSON.parse(JSON.stringify(err))); 
         setResult(JSON.stringify(err));
-        failRequest = (failRequest+1);
+        addFailReq(err)
 
       });
   }
@@ -231,8 +244,8 @@ function App() {
           />
         ))}
       </div>
-      <p id="succes">Succes Request ${succesRequest}</p>
-      <p id="fail">Fail Request ${failRequest}</p>
+      <p id="succes">Succes Request {succesRequest}</p>
+      <p id="fail">Fail Request {failRequest}</p>
       LAST FAIL RESPONSE:
       <Typography variant="h6" component="h2">
         {result}
